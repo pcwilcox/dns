@@ -1,9 +1,9 @@
 FROM alpine:3.18.3
 
 LABEL org.opencontainers.image.authors="Pete Wilcox <pete@pcwilcox.com>"
-LABEL org.opencontainers.image.url="https=//hub.docker.com/r/pcwilcox/dns"
-LABEL org.opencontainers.image.documentation="https=//github.com/pcwilcox/dns/wiki"
-LABEL org.opencontainers.image.source="https=//github.com/pcwilcox/dns"
+LABEL org.opencontainers.image.url="https://hub.docker.com/r/pcwilcox/dns"
+LABEL org.opencontainers.image.documentation="https://github.com/pcwilcox/dns/wiki"
+LABEL org.opencontainers.image.source="https://github.com/pcwilcox/dns"
 LABEL org.opencontainers.image.licenses="MIT"
 LABEL org.opencontainers.image.ref.name="dns"
 LABEL org.opencontainers.image.title="DNS"
@@ -22,7 +22,7 @@ RUN apk update \
     "dnsmasq-dnssec>=2.89" \
     "logrotate>=3.21" \
  && apk cache clean \
- && mkdir -p /config/unbound /config/dnsmasq /config/hosts /config/block
+ && mkdir -p /config/unbound /config/dnsmasq /config/hosts
 
 COPY logrotate.conf /etc/logrotate.d/dns.conf
 COPY resolv.conf /etc/resolv.conf

@@ -42,7 +42,7 @@ The container looks in the (optional) `/config` directory for user-supplied file
 
 ### Unbound
 
-Unbound will include `*.conf` files from `/config/unbound` at launch. Read the [documentation](https://unbound.docs.nlnetlabs.nl/en/latest/) for details on how to do this. By default the container will use the following config:
+The container starts Unbound with the following config by default:
 
 ```conf
 server:
@@ -67,9 +67,19 @@ server:
 include: "/config/unbound/*.conf"
 ```
 
+To modify the config, place `*.conf` files in `/config/unbound`. Unbound will include any files found there at launch and override these values. Read the [documentation](https://unbound.docs.nlnetlabs.nl/en/latest/) for details on how to do this.
+
+#### Verification
+
+`unbound-checkconf` is used to verify working configuration on startup. Observe `/config/dns.log` in case of errors.
+
+#### Root hints
+
+A root hints file is downloaded on container start. By default the file is pulled from `https://www.internic.net/domain/named.cache`but this can be overridden by setting the `ROOT_HINT` environment variable.
+
 ### dnsmasq
 
-dnsmasq will include `*.conf` files from `/config/dnsmasq` at launch. Read the [documentation](https://dnsmasq.org/docs/dnsmasq-man.html) for details on how to do this. By default it uses the following config:
+dnsmasq uses the following default config:
 
 ```conf
 port=53
@@ -90,6 +100,8 @@ user=root
 group=root
 addn-hosts=/config/hosts/
 ```
+
+To modify the config setting, place additional config files in `/config/dnsmasq` and they will be loaded on startup. Read the [documentation](https://dnsmasq.org/docs/dnsmasq-man.html) for details on how to do this.
 
 ## Hosts and ad blocking
 

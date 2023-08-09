@@ -1,5 +1,5 @@
 #!/bin/sh
-
+/bin/mkdir -p /config/unbound /config/hosts /config/dnsmasq
 /usr/bin/wget $ROOT_HINT -O /etc/unbound/root.hints
 [ $NO_BLOCKLIST ] || /usr/bin/wget https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts -O /config/hosts/StevenBlack
 /usr/sbin/unbound-anchor -a "/etc/unbound/root.key"
