@@ -8,5 +8,5 @@ docker build . \
     --tag dns:$VERSION \
     --tag dns:latest \
     --label "org.opencontainers.created=$DATE" \
-    --label "org.opencontainers.version=$REVISION" \
-    --label "org.opencontainers.revision=$DATE"
+    --label "org.opencontainers.version=$VERSION" \
+    --label "org.opencontainers.revision=$REVISION"
