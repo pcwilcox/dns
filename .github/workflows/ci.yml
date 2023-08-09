@@ -26,12 +26,11 @@ jobs:
             org.opencontainers.version={{version}}
             org.opencontainers.revision={{sha}}
           tags: |
+            type=raw,value=latest,enable={{is_default_branch}}
             type=ref,event=branch
             type=ref,event=pr
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
-          flavor: |
-            latest=auto,enable={{is_default_branch}}
       -
         name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v2
