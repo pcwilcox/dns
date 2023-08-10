@@ -8,6 +8,10 @@ on:
     branches:
       - 'main'
 
+env:
+  TEST_TAG: pcwilcox/dns:test
+  LATEST_TAG: pcwilcox/dns:latest
+
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -26,7 +30,6 @@ jobs:
             org.opencontainers.version={{version}}
             org.opencontainers.revision={{sha}}
           tags: |
-            type=raw,value=latest,enable={{is_default_branch}}
             type=ref,event=branch
             type=ref,event=pr
             type=semver,pattern={{version}}
@@ -41,10 +44,25 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
+        name: Build and export to Docker
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          load: true
+          tags: |
+            ${{ steps.meta.outputs.tags }}
+            ${{ env.TEST_TAG }}
+          labels: |
+            ${{ steps.meta.outputs.labels }}
+      -
+        name: Test
+        run: |
+          docker run --rm ${{ env.TEST_TAG }}
+      -
         name: Build and push
         uses: docker/build-push-action@v4
         with:
           context: .
-          push: ${{ github.event_name != 'pull_request' && github.ref_type == 'tag' }}
+          push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
