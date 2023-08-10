@@ -1,7 +1,7 @@
 FROM alpine:3.18.3
 
 LABEL org.opencontainers.image.authors="Pete Wilcox <pete@pcwilcox.com>" \
-      org.opencontainers.image.url="https://hub.docker.com/r/pcwilcox/dns" \
+      org.opencontainers.image.url="https://hub.docker.com/r/petewilcox/dns" \
       org.opencontainers.image.documentation="https://github.com/pcwilcox/dns" \
       org.opencontainers.image.source="https://github.com/pcwilcox/dns" \
       org.opencontainers.image.licenses="MIT" \
