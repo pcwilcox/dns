@@ -17,7 +17,7 @@ docker create \
     --name=dns \
     -p 53:53 \
     -v </path/to/config>:/config \
-    pcwilcox/dns:latest
+    petewilcox/dns:latest
 ```
 
 ### docker compose
@@ -27,7 +27,7 @@ docker create \
 version: "3.8"
 services:
     dns:
-        image: pcwilcox/dns:latest
+        image: petewilcox/dns:latest
         container_name: dns
         volumes:
             - /path/to/config:/config # Optional, used for config customization
