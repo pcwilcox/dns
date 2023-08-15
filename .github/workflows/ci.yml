@@ -43,19 +43,35 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and export to Docker
+        name: Build and export to Docker (arm64)
         uses: docker/build-push-action@v4
         with:
           context: .
           load: true
-          platforms: linux/amd64,linux/arm64/v8
+          platforms: linux/arm64/v8
           tags: |
             ${{ steps.meta.outputs.tags }}
             ${{ env.TEST_TAG }}
           labels: |
             ${{ steps.meta.outputs.labels }}
       -
-        name: Test
+        name: Test (arm64)
+        run: |
+          docker run --rm ${{ env.TEST_TAG }}
+      -
+        name: Build and export to Docker
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          load: true
+          platforms: linux/amd64
+          tags: |
+            ${{ steps.meta.outputs.tags }}
+            ${{ env.TEST_TAG }}
+          labels: |
+            ${{ steps.meta.outputs.labels }}
+      -
+        name: Test (amd64)
         run: |
           docker run --rm ${{ env.TEST_TAG }}
       -
