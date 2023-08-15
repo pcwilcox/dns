@@ -20,6 +20,9 @@ jobs:
         name: Checkout
         uses: actions/checkout@v3
       -
+        name: Setup QEMU
+        uses: actions/checkout@v2
+      -
         name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
@@ -59,7 +62,7 @@ jobs:
         run: |
           docker run --rm ${{ env.TEST_TAG }}
       -
-        name: Build and export to Docker
+        name: Build and export to Docker (amd64)
         uses: docker/build-push-action@v4
         with:
           context: .
