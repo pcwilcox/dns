@@ -12,7 +12,7 @@ LABEL org.opencontainers.image.authors="Pete Wilcox <pete@pcwilcox.com>" \
 
 ENV ROOT_URL=https://www.internic.net/domain/named.cache \
    NO_BLOCKLIST=0 \
-   TEST=0
+   TEST=""
 
 # Install unbound, dnsmasq, and utilities
 RUN apk update \
