@@ -8,7 +8,6 @@ LABEL org.opencontainers.image.authors="Pete Wilcox <pete@pcwilcox.com>" \
       org.opencontainers.image.ref.name="dns" \
       org.opencontainers.image.title="DNS" \
       org.opencontainers.image.description="Recursive, caching DNS resolver using dnsmasq and Unbound" \
-      org.opencontainers.image.base.digest="sha256=7e01a0d0a1dcd9e539f8e9bbd80106d59efbdf97293b3d38f5d7a34501526cdb" \
       org.opencontainers.image.base.name="hub.docker.com/alpine/alpine:3.18.3"
 
 ENV ROOT_URL=https://www.internic.net/domain/named.cache \
