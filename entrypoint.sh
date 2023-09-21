@@ -5,6 +5,9 @@ ROOT_FILE=/etc/unbound/root.hints
 BLACK_URL=https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
 BLACK_FILE=/config/hosts/StevenBlack
 
+/bin/ln -s /dev/stdout /var/log/dnsmasq.log
+/bin/ln -s /dev/stdout /var/log/unbound.log
+
 echo "Verifying directories"
 for dir in "/config" "/config/unbound" "/config/hosts" "/config/dnsmasq"; do
     if [ -d "$dir" ]; then
@@ -49,31 +52,11 @@ if ! /usr/sbin/unbound-checkconf; then
 fi
 
 echo "Checks complete, starting services" | /usr/bin/tee -a /config/dns.log
-/usr/sbin/unbound -c /etc/unbound/unbound.conf | /usr/bin/tee -a /config/dns.log
+/usr/sbin/unbound -c /etc/unbound/unbound.conf
 
 if ! /usr/bin/pgrep unbound >/dev/null; then
     echo "Error running unbound, check logs" | /usr/bin/tee -a /config/dns.log
     exit 1
 fi
 
-/usr/sbin/dnsmasq
-
-if ! /usr/bin/pgrep dnsmasq >/dev/null; then
-    echo "Error running dnsmasq, check logs" | /usr/bin/tee -a /config/dns.log
-    exit 1
-fi
-
-if [ -n "$TEST" ]; then
-    if ! /usr/bin/dig +short ns @127.0.0.1 -p 5335 . >/dev/null; then
-        echo "Error querying unbound" | /usr/bin/tee -a /config/dns.log
-        exit 1
-    fi
-    if ! /usr/bin/dig +short ns @127.0.0.1 -p 53 . >/dev/null; then
-        echo "Error querying dnsmasq" | /usr/bin/tee -a /config/dns.log
-        exit 1
-    fi
-    echo "Tests complete" | /usr/bin/tee -a /config/dns.log
-    exit 0
-fi
-
-/usr/bin/tail -F /config/dns.log
+/usr/sbin/dnsmasq --keep-in-foreground

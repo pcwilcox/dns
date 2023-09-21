@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSION="1.0.0"
+VERSION="1.0.6"
 REVISION=$(git rev-parse --short HEAD)
 DATE=$(date --iso-8601)
 

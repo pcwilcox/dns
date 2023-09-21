@@ -20,12 +20,11 @@ RUN apk update \
     "unbound>=1.17" \
     "dnsmasq>=2.89" \
     "dnsmasq-dnssec>=2.89" \
-    "logrotate>=3.21" \
     "bind-tools>=9.18.16" \
+    "jq>=1.6" \
  && apk cache clean \
  && mkdir -p /config/unbound /config/dnsmasq /config/hosts
 
-COPY logrotate.conf /etc/logrotate.d/dns.conf
 COPY resolv.conf /etc/resolv.conf
 COPY unbound.conf /etc/unbound/unbound.conf
 COPY dnsmasq.conf /etc/dnsmasq.conf
